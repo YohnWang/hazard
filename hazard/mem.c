@@ -1,6 +1,7 @@
 #include<stdint.h>
 #include<stdlib.h>
 #include<stdio.h>
+#include<mem.h>
 
 static void *mem; //alloc 4GiB memory
 
@@ -21,7 +22,7 @@ void mem_lw(uint32_t *data,uintptr_t addr)
 
 void mem_ld(uint64_t *data,uintptr_t addr)
 {
-    *data=((uint64_t*)mem)[addr>>4];
+    *data=((uint64_t*)mem)[addr>>3];
 }
 
 void mem_sb(uint8_t data,uintptr_t addr)
@@ -41,10 +42,30 @@ void mem_sw(uint32_t data,uintptr_t addr)
 
 void mem_sd(uint64_t data,uintptr_t addr)
 {
-    ((uint64_t*)mem)[addr>>8]=data;
+    ((uint64_t*)mem)[addr>>3]=data;
 }
 
-void init_mem(FILE *elf)
+void mem_init(FILE *elf)
 {
-    mem=malloc(1024);
+    mem=malloc(100000);
 }
+
+void mem_del()
+{
+    free(mem);
+}
+#ifdef DEBUG
+
+static void *test_mem_tmp;
+void test_mem_init(uintptr_t capacity)
+{
+    test_mem_tmp=mem;
+    mem=malloc(capacity);
+}
+
+void test_mem_del()
+{
+    free(mem);
+    mem=test_mem_tmp;
+}
+#endif
