@@ -21,7 +21,7 @@ void mem_lw(uint32_t *data,uintptr_t addr)
 
 void mem_ld(uint64_t *data,uintptr_t addr)
 {
-    *data=((uint64_t*)mem)[addr>>4];
+    *data=((uint64_t*)mem)[addr>>3];
 }
 
 void mem_sb(uint8_t data,uintptr_t addr)
@@ -41,7 +41,7 @@ void mem_sw(uint32_t data,uintptr_t addr)
 
 void mem_sd(uint64_t data,uintptr_t addr)
 {
-    ((uint64_t*)mem)[addr>>8]=data;
+    ((uint64_t*)mem)[addr>>3]=data;
 }
 
 void init_mem(FILE *elf)
