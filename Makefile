@@ -10,7 +10,7 @@ WARNINGS= -Wall
 
 CFLAGS =  \
 	$(WARNINGS) $(INCLUDES)\
-	-DDEBUG
+	-DDEBUG -g
 	
 
 OBJ = ./hazard/hazard.o ./test/test.o ./hazard/mem.o
@@ -19,7 +19,7 @@ OBJ = ./hazard/hazard.o ./test/test.o ./hazard/mem.o
 	$(CC) -c $(CFLAGS) -o $@ $<
 
 all: $(OBJ)
-	$(CC) $(OBJ) -o hazard.exe 
+	$(CC) $(CFLAGS) $(OBJ) -o hazard.exe 
 	
 
 clean:
