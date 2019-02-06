@@ -3,7 +3,6 @@
 
 static void test_mem()
 {
-    int i=0;
     uint8_t test_v1;
     uint16_t test_v2;
     uint32_t test_v3;
