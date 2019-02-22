@@ -13,7 +13,8 @@ CFLAGS =  \
 	-DDEBUG -g
 	
 
-OBJ = ./hazard/hazard.o ./test/test.o ./hazard/mem.o
+OBJ = ./hazard/hazard.o ./test/test.o ./hazard/mem.o \
+		./riscv/riscv.o ./riscv/id.o
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) -o $@ $<
