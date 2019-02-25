@@ -24,22 +24,22 @@ int get_rd(inst_bits_t i)
 
 int get_rs1(inst_bits_t i)
 {
-
+  return (i&0xf8000)>>15;
 }
 
 int get_rs2(inst_bits_t i)
 {
-
+  return (i&0x1f00000)>>20;
 }
 
 int get_funct3(inst_bits_t i)
 {
-
+  return (i&0x7000)>>12;
 }
 
 int get_funct7(inst_bits_t i)
 {
-
+  return (i&0xfe000000)>>25;
 }
 
 int get_immi(inst_bits_t i)
