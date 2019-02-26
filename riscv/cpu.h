@@ -2,19 +2,20 @@
 #define CPU_H
 #include<stdint.h>
 
-struct reg_t
-{
-    intptr_t x[32];
-};
+typedef intptr_t reg_t;
+
 
 struct csr_t
 {
 
 };
 
+typedef reg_t regfile_t[32];
+
 struct cpu_t
 {
-    struct reg_t reg;
+    reg_t  pc;
+    regfile_t x;
     struct csr_t csr;
 };
 
@@ -51,12 +52,6 @@ struct J_type
 
 };
 
-union inst_t
-{
-    uint32_t row;
-    struct R_type   R;
-
-};
 
 typedef uint32_t inst_bits_t;
 
