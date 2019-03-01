@@ -14,5 +14,5 @@ void step(struct cpu_t *v)
 {
     inst_bits_t i;
     mem_lw(&i,v->pc);
-    exec(v,i);
+    //exec(v,i);
 }

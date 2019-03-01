@@ -2,6 +2,8 @@
 #define CPU_H
 #include<stdint.h>
 
+#include<mem.h>
+
 typedef intptr_t reg_t;
 
 
