@@ -44,38 +44,22 @@ int get_rd(inst_bits_t i)
 
 int get_rs1(inst_bits_t i)
 {
-<<<<<<< HEAD
-  return (i&0xf8000)>>15;
-=======
     return ubit(i,19,15);
->>>>>>> 849e21638e76474ce440d4e6dda610a919881206
 }
 
 int get_rs2(inst_bits_t i)
 {
-<<<<<<< HEAD
-  return (i&0x1f00000)>>20;
-=======
     return ubit(i,24,20);
->>>>>>> 849e21638e76474ce440d4e6dda610a919881206
 }
 
 int get_funct3(inst_bits_t i)
 {
-<<<<<<< HEAD
-  return (i&0x7000)>>12;
-=======
     return ubit(i,14,12);
->>>>>>> 849e21638e76474ce440d4e6dda610a919881206
 }
 
 int get_funct7(inst_bits_t i)
 {
-<<<<<<< HEAD
-  return (i&0xfe000000)>>25;
-=======
     return ubit(i,31,25);
->>>>>>> 849e21638e76474ce440d4e6dda610a919881206
 }
 
 int get_immi(inst_bits_t i)
