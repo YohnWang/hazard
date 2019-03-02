@@ -13,8 +13,10 @@ CFLAGS =  \
 	-DDEBUG -g
 	
 
-OBJ = ./hazard/hazard.o ./test/test.o ./hazard/mem.o \
-		./riscv/riscv.o ./riscv/id.o
+SRC =  $(wildcard ./hazard/*.c ./riscv/*.c ./test./*.c)
+
+
+OBJ = $(SRC:%.c=%.o)
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) -o $@ $<
