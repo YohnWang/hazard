@@ -1,19 +1,5 @@
 #include<cpu.h>
-#include<opcodemap.h>
 
-typedef void (*exec_t)(struct cpu_t *v,inst_bits_t i);
-
-static exec_t opcode_map[8][4]=
-{
-    [0]={[0]=LOAD,[1]=STORE,[3]=BRANCH},
-    [1]={[3]=JALR},
-    [2]={},
-    [3]={[3]=JAL},
-    [4]={[1]=OP,[3]=SYSTEM},
-    [5]={[0]=AUIPC,[1]=LUI},
-    [6]={[0]=OP_IMM32,[1]=OP32},
-    [7]={}
-};
 
 _Static_assert(sizeof(int)>=4,"data model is not ILP64 or LLP64 or ILP32");
 _Static_assert(-1==~0,"it must be two's complement code");
