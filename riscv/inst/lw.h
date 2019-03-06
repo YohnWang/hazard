@@ -1,4 +1,4 @@
-void lw(struct cpu_t *v,inst_bits_t i)
+void lw(struct hart_t *v,inst_bits_t i)
 {
     int rd=get_rd(i);
     int rs1=get_rs1(i);

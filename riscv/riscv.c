@@ -5,12 +5,12 @@ struct sim_t
 };
 
 
-void sim(struct cpu_t *v)
+void sim(struct hart_t *v)
 {
 
 }
 
-void step(struct cpu_t *v)
+void step(struct hart_t *v)
 {
     inst_bits_t i;
     mem_lw(&i,v->pc);

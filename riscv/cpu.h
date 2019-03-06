@@ -14,7 +14,8 @@ struct csr_t
 
 typedef reg_t regfile_t[32];
 
-struct cpu_t
+//hardware thread
+struct hart_t
 {
     reg_t  pc;
     regfile_t x;

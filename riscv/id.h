@@ -1,6 +1,7 @@
 #ifndef ID_H
 #define ID_H
 
+#include<cpu.h>
 
 extern int get_op(inst_bits_t i);
 extern int get_rd(inst_bits_t i);
