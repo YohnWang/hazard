@@ -1,9 +1,22 @@
 #include<cpu.h>
 #include<id.h>
 #include<opcodemap.h>
-#include<inst/lw.h>
+#include<inst.h>
 
 typedef void (*exec_t)(struct hart_t *v,inst_bits_t i);
+
+static void LOAD(struct hart_t *v,inst_bits_t i);
+static void STORE(struct hart_t *v,inst_bits_t i);
+static void BRANCH(struct hart_t *v,inst_bits_t i);
+static void JALR(struct hart_t *v,inst_bits_t i);
+static void JAL(struct hart_t *v,inst_bits_t i);
+static void OP(struct hart_t *v,inst_bits_t i);
+static void SYSTEM(struct hart_t *v,inst_bits_t i);
+static void AUIPC(struct hart_t *v,inst_bits_t i);
+static void LUI(struct hart_t *v,inst_bits_t i);
+static void OP_IMM32(struct hart_t *v,inst_bits_t i);
+static void OP32(struct hart_t *v,inst_bits_t i);
+
 
 static exec_t opcode_map[8][4]=
 {
@@ -17,60 +30,78 @@ static exec_t opcode_map[8][4]=
     [7]={}
 };
 
-
-void LOAD(struct hart_t *v,inst_bits_t i)
+static inline int ubits(inst_bits_t b,int hi,int lo)
 {
-    static exec_t tab[8]={[2]=lw};
+    return (b>>lo)&((1<<(hi+1-lo))-1);
+}
+
+void launch(struct hart_t *v,inst_bits_t i)
+{
+    opcode_map[ubits(i,4,2)][ubits(i,6,5)](v,i);
+}
+
+static void LOAD(struct hart_t *v,inst_bits_t i)
+{
+    static exec_t tab[8]=
+    {
+        [0]=lb,[1]=lh,[2]=lw,[3]=ld,
+        [4]=lbu,[5]=lhu,[6]=lwu
+    };
     int funct3=get_funct3(i);
     tab[funct3](v,i);
 }
 
-void STORE(struct hart_t *v,inst_bits_t i)
+static void STORE(struct hart_t *v,inst_bits_t i)
+{
+    static exec_t tab[8]=
+    {
+        [0]=sb,[1]=sh,[2]=sw,[3]=sd,
+    };
+    int funct3=get_funct3(i);
+    tab[funct3](v,i);
+}
+
+static void BRANCH(struct hart_t *v,inst_bits_t i)
 {
 
 }
 
-void BRANCH(struct hart_t *v,inst_bits_t i)
+static void JALR(struct hart_t *v,inst_bits_t i)
 {
 
 }
 
-void JALR(struct hart_t *v,inst_bits_t i)
+static void JAL(struct hart_t *v,inst_bits_t i)
 {
 
 }
 
-void JAL(struct hart_t *v,inst_bits_t i)
+static void OP(struct hart_t *v,inst_bits_t i)
 {
 
 }
 
-void OP(struct hart_t *v,inst_bits_t i)
+static void SYSTEM(struct hart_t *v,inst_bits_t i)
 {
 
 }
 
-void SYSTEM(struct hart_t *v,inst_bits_t i)
+static void AUIPC(struct hart_t *v,inst_bits_t i)
 {
 
 }
 
-void AUIPC(struct hart_t *v,inst_bits_t i)
+static void LUI(struct hart_t *v,inst_bits_t i)
 {
 
 }
 
-void LUI(struct hart_t *v,inst_bits_t i)
+static void OP_IMM32(struct hart_t *v,inst_bits_t i)
 {
 
 }
 
-void OP_IMM32(struct hart_t *v,inst_bits_t i)
-{
-
-}
-
-void OP32(struct hart_t *v,inst_bits_t i)
+static void OP32(struct hart_t *v,inst_bits_t i)
 {
 
 }
