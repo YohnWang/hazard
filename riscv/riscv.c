@@ -12,7 +12,15 @@ void sim(struct hart_t *v)
 
 void step(struct hart_t *v)
 {
+    // fetch
     inst_bits_t i;
     mem_lw(&i,v->pc);
-    //exec(v,i);
+
+    //decode and execute
+    launch(v,i);
+
+    //exception and interrupt
+    //trap(v);
+
+    //
 }

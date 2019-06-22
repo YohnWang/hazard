@@ -20,7 +20,14 @@ struct hart_t
     reg_t  pc;
     regfile_t x;
     struct csr_t csr;
+    struct
+    {
+        int pcsel;
+        reg_t pcnext;
+    }ctrl;
 };
+
+enum {PCPLUS4=0,PCPLUS2,PCJUMP,PCMTEVC,PCMEPC};
 
 struct R_type
 {

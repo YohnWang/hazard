@@ -111,5 +111,147 @@ void beq(struct hart_t *v,inst_bits_t i)
     int rs2=get_rs2(i);
     int imm=get_immb(i);
     if(v->x[rs1]==v->x[rs2])
-        v->pc=v->pc+imm;
+    {
+        v->ctrl.pcsel=PCJUMP;
+        v->ctrl.pcnext=v->pc+imm;
+    }
+}
+
+void bne(struct hart_t *v,inst_bits_t i)
+{
+    int rs1=get_rs1(i);
+    int rs2=get_rs2(i);
+    int imm=get_immb(i);
+    if(v->x[rs1]!=v->x[rs2])
+    {
+        v->ctrl.pcsel=PCJUMP;
+        v->ctrl.pcnext=v->pc+imm;
+    }
+}
+
+void blt(struct hart_t *v,inst_bits_t i)
+{
+    int rs1=get_rs1(i);
+    int rs2=get_rs2(i);
+    int imm=get_immb(i);
+    if(v->x[rs1]<v->x[rs2])
+    {
+        v->ctrl.pcsel=PCJUMP;
+        v->ctrl.pcnext=v->pc+imm;
+    }
+}
+
+void bge(struct hart_t *v,inst_bits_t i)
+{
+    int rs1=get_rs1(i);
+    int rs2=get_rs2(i);
+    int imm=get_immb(i);
+    if(v->x[rs1]>=v->x[rs2])
+    {
+        v->ctrl.pcsel=PCJUMP;
+        v->ctrl.pcnext=v->pc+imm;
+    }
+}
+
+void bltu(struct hart_t *v,inst_bits_t i)
+{
+    int rs1=get_rs1(i);
+    int rs2=get_rs2(i);
+    int imm=get_immb(i);
+    if((uint64_t)v->x[rs1]<(uint64_t)v->x[rs2])
+    {
+        v->ctrl.pcsel=PCJUMP;
+        v->ctrl.pcnext=v->pc+imm;
+    }
+}
+
+void bgeu(struct hart_t *v,inst_bits_t i)
+{
+    int rs1=get_rs1(i);
+    int rs2=get_rs2(i);
+    int imm=get_immb(i);
+    if((uint64_t)v->x[rs1]>=(uint64_t)v->x[rs2])
+    {
+        v->ctrl.pcsel=PCJUMP;
+        v->ctrl.pcnext=v->pc+imm;
+    }
+}
+
+void jalr(struct hart_t *v,inst_bits_t i)
+{
+    int rd=get_rd(i);
+    int rs1=get_rs1(i);
+    int imm=get_immi(i);
+    v->x[rd]=v->pc+4;
+    v->ctrl.pcsel=PCJUMP;
+    v->ctrl.pcnext=rs1+imm;
+}
+
+void jal(struct hart_t *v,inst_bits_t i)
+{
+    int rd=get_rd(i);
+    int imm=get_immj(i);
+    v->x[rd]=v->pc+4;
+    v->ctrl.pcsel=PCJUMP;
+    v->ctrl.pcnext=v->pc+imm;
+}
+
+void add(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void sub(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void sll(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void slt(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void sltu(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void xor(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void srl(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void sra(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void or(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void and(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void auipc(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void lui(struct hart_t *v,inst_bits_t i)
+{
+
 }

@@ -10,6 +10,7 @@ static void STORE(struct hart_t *v,inst_bits_t i);
 static void BRANCH(struct hart_t *v,inst_bits_t i);
 static void JALR(struct hart_t *v,inst_bits_t i);
 static void JAL(struct hart_t *v,inst_bits_t i);
+static void OP_IMM(struct hart_t *v,inst_bits_t i);
 static void OP(struct hart_t *v,inst_bits_t i);
 static void SYSTEM(struct hart_t *v,inst_bits_t i);
 static void AUIPC(struct hart_t *v,inst_bits_t i);
@@ -24,7 +25,7 @@ static exec_t opcode_map[8][4]=
     [1]={[3]=JALR},
     [2]={},
     [3]={[3]=JAL},
-    [4]={[1]=OP,[3]=SYSTEM},
+    [4]={[0]=OP_IMM,[1]=OP,[3]=SYSTEM},
     [5]={[0]=AUIPC,[1]=LUI},
     [6]={[0]=OP_IMM32,[1]=OP32},
     [7]={}
@@ -63,22 +64,47 @@ static void STORE(struct hart_t *v,inst_bits_t i)
 
 static void BRANCH(struct hart_t *v,inst_bits_t i)
 {
-
+    static exec_t tab[8]=
+    {
+        [0]=beq,[1]=bne,
+        [4]=blt,[5]=bge,
+        [6]=bltu,[7]=bgeu
+    };
+    int funct3=get_funct3(i);
+    tab[funct3](v,i);
 }
 
 static void JALR(struct hart_t *v,inst_bits_t i)
 {
-
+    static exec_t tab[8]=
+    {
+        [0]=jalr
+    };
+    int funct3=get_funct3(i);
+    tab[funct3](v,i);
 }
 
 static void JAL(struct hart_t *v,inst_bits_t i)
+{
+    jal(v,i);
+}
+
+static void OP_IMM(struct hart_t *v,inst_bits_t i)
 {
 
 }
 
 static void OP(struct hart_t *v,inst_bits_t i)
 {
-
+    static exec_t tab[16]=
+    {
+        [0]=add,[1]=sll,[2]=slt,[3]=sltu,
+        [4]=xor,[5]=srl,[6]=or,[7]=and,
+        [8]=sub,[13]=sra
+    };
+    int funct3=get_funct3(i);
+    int bit30=ubits(i,30,30);
+    tab[funct3|(bit30<<3)](v,i);
 }
 
 static void SYSTEM(struct hart_t *v,inst_bits_t i)
@@ -88,12 +114,12 @@ static void SYSTEM(struct hart_t *v,inst_bits_t i)
 
 static void AUIPC(struct hart_t *v,inst_bits_t i)
 {
-
+    auipc(v,i);
 }
 
 static void LUI(struct hart_t *v,inst_bits_t i)
 {
-
+    lui(v,i);
 }
 
 static void OP_IMM32(struct hart_t *v,inst_bits_t i)
