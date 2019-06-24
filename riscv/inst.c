@@ -184,7 +184,7 @@ void jalr(struct hart_t *v,inst_bits_t i)
     int imm=get_immi(i);
     v->x[rd]=v->pc+4;
     v->ctrl.pcsel=PCJUMP;
-    v->ctrl.pcnext=rs1+imm;
+    v->ctrl.pcnext=v->x[rs1]+imm;
 }
 
 void jal(struct hart_t *v,inst_bits_t i)
@@ -198,60 +198,97 @@ void jal(struct hart_t *v,inst_bits_t i)
 
 void add(struct hart_t *v,inst_bits_t i)
 {
-
+    int rs1=get_rs1(i);
+    int rs2=get_rs2(i);
+    int rd=get_rd(i);
+    v->x[rd]=v->x[rs1]+v->x[rs2];
 }
 
 void sub(struct hart_t *v,inst_bits_t i)
 {
-
+    int rs1=get_rs1(i);
+    int rs2=get_rs2(i);
+    int rd=get_rd(i);
+    v->x[rd]=v->x[rs1]-v->x[rs2];
 }
 
 void sll(struct hart_t *v,inst_bits_t i)
 {
-
+    int rs1=get_rs1(i);
+    int rs2=get_rs2(i);
+    int rd=get_rd(i);
+    v->x[rd]=v->x[rs1]<<(v->x[rs2]&0x3f);
 }
 
 void slt(struct hart_t *v,inst_bits_t i)
 {
-
+    int rs1=get_rs1(i);
+    int rs2=get_rs2(i);
+    int rd=get_rd(i);
+    v->x[rd]=v->x[rs1] < v->x[rs2]? 1:0;
 }
 
 void sltu(struct hart_t *v,inst_bits_t i)
 {
-
+    int rs1=get_rs1(i);
+    int rs2=get_rs2(i);
+    int rd=get_rd(i);
+    v->x[rd]=(ureg_t)v->x[rs1] < (ureg_t)v->x[rs2]? 1:0;
 }
 
 void xor(struct hart_t *v,inst_bits_t i)
 {
-
+    int rs1=get_rs1(i);
+    int rs2=get_rs2(i);
+    int rd=get_rd(i);
+    v->x[rd]=v->x[rs1] ^ v->x[rs2];
 }
 
 void srl(struct hart_t *v,inst_bits_t i)
 {
-
+    int rs1=get_rs1(i);
+    int rs2=get_rs2(i);
+    int rd=get_rd(i);
+    v->x[rd]=(ureg_t)v->x[rs1]>>(v->x[rs2]&0x3f);
 }
 
 void sra(struct hart_t *v,inst_bits_t i)
 {
-
+    int rs1=get_rs1(i);
+    int rs2=get_rs2(i);
+    int rd=get_rd(i);
+    v->x[rd]=v->x[rs1]>>(v->x[rs2]&0x3f);
 }
 
 void or(struct hart_t *v,inst_bits_t i)
 {
-
+    int rs1=get_rs1(i);
+    int rs2=get_rs2(i);
+    int rd=get_rd(i);
+    v->x[rd]=v->x[rs1] | v->x[rs2];
 }
 
 void and(struct hart_t *v,inst_bits_t i)
 {
-
+    int rs1=get_rs1(i);
+    int rs2=get_rs2(i);
+    int rd=get_rd(i);
+    v->x[rd]=v->x[rs1] & v->x[rs2];
 }
 
 void auipc(struct hart_t *v,inst_bits_t i)
 {
-
+    int rd=get_rd(i);
+    int32_t imm=get_immu(i);
+    //the type of v->pc is int64_t,type of imm is int32_t,imm will be expended to int64_t
+    v->x[rd]=v->pc+(imm<<12);
 }
 
 void lui(struct hart_t *v,inst_bits_t i)
 {
-
+    int rd=get_rd(i);
+    int32_t imm=get_immu(i);
+    //the type of v->pc is int64_t,type of imm is int32_t,imm will be expended to int64_t
+    v->x[rd]=(imm<<12);
 }
+

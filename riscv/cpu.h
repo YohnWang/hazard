@@ -4,7 +4,8 @@
 
 #include<mem.h>
 
-typedef intptr_t reg_t;
+typedef int64_t reg_t;
+typedef uint64_t ureg_t;
 
 
 struct csr_t
