@@ -91,7 +91,15 @@ static void JAL(struct hart_t *v,inst_bits_t i)
 
 static void OP_IMM(struct hart_t *v,inst_bits_t i)
 {
-
+    static exec_t tab[16]=
+    {
+        [0]=addi,[2]=slti,[3]=sltiu,
+        [4]=xori,[6]=ori ,[7]=andi,
+        [1]=slli,[5]=srli,[13]=srai
+    };
+    int funct3=get_funct3(i);
+    int bit30=ubits(i,30,30);
+    tab[funct3==5?(funct3|(bit30<<3)):funct3](v,i);
 }
 
 static void OP(struct hart_t *v,inst_bits_t i)
@@ -109,7 +117,18 @@ static void OP(struct hart_t *v,inst_bits_t i)
 
 static void SYSTEM(struct hart_t *v,inst_bits_t i)
 {
-
+    int which=ubits(i,31,20);
+    int x=ubits(i,25,25);
+    switch(which)
+    {
+        case 0x000: ecall(v,i); break;
+        case 0x001: ebreak(v,i);break;
+        case 0x002: uret(v,i);  break;
+        case 0x102: sret(v,i);  break;
+        case 0x302: mret(v,i);  break;
+        case 0x105: wfi(v,i);   break;
+        default: break;
+    }
 }
 
 static void AUIPC(struct hart_t *v,inst_bits_t i)

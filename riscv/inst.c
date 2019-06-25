@@ -3,6 +3,16 @@
 #include<mem.h>
 #include<stdint.h>
 
+/*
+template
+
+void (struct hart_t *v,inst_bits_t i)
+{
+
+}
+*/
+
+
 void lb(struct hart_t *v,inst_bits_t i)
 {
     int rd=get_rd(i);
@@ -288,7 +298,110 @@ void lui(struct hart_t *v,inst_bits_t i)
 {
     int rd=get_rd(i);
     int32_t imm=get_immu(i);
-    //the type of v->pc is int64_t,type of imm is int32_t,imm will be expended to int64_t
     v->x[rd]=(imm<<12);
 }
 
+void addi(struct hart_t *v,inst_bits_t i)
+{
+    int rd=get_rd(i);
+    int rs1=get_rs1(i);
+    int imm=get_immi(i);
+    v->x[rd]=v->x[rs1]+imm;
+}
+
+void slti(struct hart_t *v,inst_bits_t i)
+{
+    int rd=get_rd(i);
+    int rs1=get_rs1(i);
+    int imm=get_immi(i);
+    v->x[rd]=v->x[rs1]<imm?1:0;
+}
+
+void sltiu(struct hart_t *v,inst_bits_t i)
+{
+    int rd=get_rd(i);
+    int rs1=get_rs1(i);
+    int imm=get_immi(i);
+    //the right-hand side of comparison is 12-bit sign-extended immediate
+    //the imm type : int32_t -> int64_t -> uint64_t
+    v->x[rd]=(ureg_t)v->x[rs1]< (ureg_t)imm ? 1:0;
+}
+
+void xori(struct hart_t *v,inst_bits_t i)
+{
+    int rd=get_rd(i);
+    int rs1=get_rs1(i);
+    int imm=get_immi(i);
+    v->x[rd]=v->x[rs1] ^ imm;
+}
+
+void ori(struct hart_t *v,inst_bits_t i)
+{
+    int rd=get_rd(i);
+    int rs1=get_rs1(i);
+    int imm=get_immi(i);
+    v->x[rd]=v->x[rs1]|imm;
+}
+
+void andi(struct hart_t *v,inst_bits_t i)
+{
+    int rd=get_rd(i);
+    int rs1=get_rs1(i);
+    int imm=get_immi(i);
+    v->x[rd]=v->x[rs1]&imm;
+}
+
+void slli(struct hart_t *v,inst_bits_t i)
+{
+    int rd=get_rd(i);
+    int rs1=get_rs1(i);
+    int imm=get_immi(i);
+    v->x[rd]=v->x[rs1] << (imm&0x3f);
+}
+
+void srli(struct hart_t *v,inst_bits_t i)
+{
+    int rd=get_rd(i);
+    int rs1=get_rs1(i);
+    int imm=get_immi(i);
+    _Static_assert(((ureg_t)-1>>(int)1)>0,"right shift to unsigned type must be logical");
+    v->x[rd]=(ureg_t)v->x[rs1] >> (imm&0x3f);
+}
+
+void srai(struct hart_t *v,inst_bits_t i)
+{
+    int rd=get_rd(i);
+    int rs1=get_rs1(i);
+    int imm=get_immi(i);
+    v->x[rd]=v->x[rs1] >> (imm&0x3f);
+}
+
+void ecall(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void ebreak(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void uret(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void sret(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void mret(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void wfi(struct hart_t *v,inst_bits_t i)
+{
+
+}
