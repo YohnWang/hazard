@@ -49,5 +49,14 @@ extern void uret(struct hart_t *v,inst_bits_t i);
 extern void sret(struct hart_t *v,inst_bits_t i);
 extern void mret(struct hart_t *v,inst_bits_t i);
 extern void wfi(struct hart_t *v,inst_bits_t i);
+extern void addiw(struct hart_t *v,inst_bits_t i);
+extern void slliw(struct hart_t *v,inst_bits_t i);
+extern void srliw(struct hart_t *v,inst_bits_t i);
+extern void sraiw(struct hart_t *v,inst_bits_t i);
+extern void addw(struct hart_t *v,inst_bits_t i);
+extern void subw(struct hart_t *v,inst_bits_t i);
+extern void sllw(struct hart_t *v,inst_bits_t i);
+extern void srlw(struct hart_t *v,inst_bits_t i);
+extern void sraw(struct hart_t *v,inst_bits_t i);
 
 #endif

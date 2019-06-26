@@ -405,3 +405,57 @@ void wfi(struct hart_t *v,inst_bits_t i)
 {
 
 }
+
+void addiw(struct hart_t *v,inst_bits_t i)
+{
+    int rd=get_rd(i);
+    int rs1=get_rs1(i);
+    int32_t imm=get_immi(i);
+    v->x[rd]=(int32_t)v->x[rs1]+imm;
+}
+
+void slliw(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void srliw(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void sraiw(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void addw(struct hart_t *v,inst_bits_t i)
+{
+    int rs1=get_rs1(i);
+    int rs2=get_rs2(i);
+    int rd=get_rd(i);
+    v->x[rd]=(int32_t)v->x[rs1]+(int32_t)v->x[rs2];
+}
+
+void subw(struct hart_t *v,inst_bits_t i)
+{
+    int rs1=get_rs1(i);
+    int rs2=get_rs2(i);
+    int rd=get_rd(i);
+    v->x[rd]=(int32_t)v->x[rs1]-(int32_t)v->x[rs2];
+}
+
+void sllw(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void srlw(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void sraw(struct hart_t *v,inst_bits_t i)
+{
+
+}

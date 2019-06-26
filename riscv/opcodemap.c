@@ -143,10 +143,26 @@ static void LUI(struct hart_t *v,inst_bits_t i)
 
 static void OP_IMM32(struct hart_t *v,inst_bits_t i)
 {
+    static exec_t tab[16]=
+    {
+        [0]=addiw,
 
+        [1]=slliw,[5]=srliw,[13]=sraiw
+    };
+    int funct3=get_funct3(i);
+    int bit30=ubits(i,30,30);
+    tab[funct3==5?(funct3|(bit30<<3)):funct3](v,i);
 }
 
 static void OP32(struct hart_t *v,inst_bits_t i)
 {
-
+    static exec_t tab[16]=
+    {
+        [0]=addw,[1]=sllw,
+        [5]=srlw,
+        [8]=subw,[13]=sraw
+    };
+    int funct3=get_funct3(i);
+    int bit30=ubits(i,30,30);
+    tab[funct3|(bit30<<3)](v,i);
 }
