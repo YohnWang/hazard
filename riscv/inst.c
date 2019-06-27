@@ -459,3 +459,33 @@ void sraw(struct hart_t *v,inst_bits_t i)
 {
 
 }
+
+void csrrw(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void csrrs(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void csrrc(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void csrrwi(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void csrrsi(struct hart_t *v,inst_bits_t i)
+{
+
+}
+
+void csrrci(struct hart_t *v,inst_bits_t i)
+{
+
+}

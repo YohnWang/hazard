@@ -115,7 +115,8 @@ static void OP(struct hart_t *v,inst_bits_t i)
     tab[funct3|(bit30<<3)](v,i);
 }
 
-static void SYSTEM(struct hart_t *v,inst_bits_t i)
+
+static void privilege(struct hart_t *v,inst_bits_t i)
 {
     int which=ubits(i,31,20);
     int x=ubits(i,25,25);
@@ -129,6 +130,18 @@ static void SYSTEM(struct hart_t *v,inst_bits_t i)
         case 0x105: wfi(v,i);   break;
         default: break;
     }
+}
+
+static void SYSTEM(struct hart_t *v,inst_bits_t i)
+{
+    static exec_t tab[16]=
+    {
+        [0]=privilege,
+        [1]=csrrw,[2]=csrrs,[3]=csrrc,
+        [5]=csrrwi,[6]=csrrsi,[7]=csrrci,
+    };
+    int funct3=get_funct3(i);
+    tab[funct3](v,i);
 }
 
 static void AUIPC(struct hart_t *v,inst_bits_t i)

@@ -58,5 +58,11 @@ extern void subw(struct hart_t *v,inst_bits_t i);
 extern void sllw(struct hart_t *v,inst_bits_t i);
 extern void srlw(struct hart_t *v,inst_bits_t i);
 extern void sraw(struct hart_t *v,inst_bits_t i);
+extern void csrrw(struct hart_t *v,inst_bits_t i);
+extern void csrrs(struct hart_t *v,inst_bits_t i);
+extern void csrrc(struct hart_t *v,inst_bits_t i);
+extern void csrrwi(struct hart_t *v,inst_bits_t i);
+extern void csrrsi(struct hart_t *v,inst_bits_t i);
+extern void csrrci(struct hart_t *v,inst_bits_t i);
 
 #endif
