@@ -15,6 +15,7 @@ void step(struct hart_t *v)
 {
     //prepare
     v->ctrl.pcsel=PCPLUS4;
+    v->x[0]=0;
 
     // fetch
     inst_bits_t i;
