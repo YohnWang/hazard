@@ -291,14 +291,14 @@ void auipc(struct hart_t *v,inst_bits_t i)
     int rd=get_rd(i);
     int32_t imm=get_immu(i);
     //the type of v->pc is int64_t,type of imm is int32_t,imm will be expended to int64_t
-    v->x[rd]=v->pc+(imm<<12);
+    v->x[rd]=v->pc+imm;
 }
 
 void lui(struct hart_t *v,inst_bits_t i)
 {
     int rd=get_rd(i);
     int32_t imm=get_immu(i);
-    v->x[rd]=(imm<<12);
+    v->x[rd]=imm;
 }
 
 void addi(struct hart_t *v,inst_bits_t i)
