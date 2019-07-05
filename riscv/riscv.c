@@ -25,7 +25,9 @@ void step(struct hart_t *v)
     launch(v,i);
 
     //exception and interrupt
-    //trap(v);
+    //trap(v,i);
+
+
 
     //after
     switch(v->ctrl.pcsel)

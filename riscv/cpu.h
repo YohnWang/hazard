@@ -24,6 +24,7 @@ struct hart_t
     struct
     {
         int pcsel;
+        int trap;
         reg_t pcnext;
     }ctrl;
 };
